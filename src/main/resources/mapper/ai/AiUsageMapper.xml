@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shaloman.pj.ai.mapper.AiUsageMapper">
+ <resultMap id="row" type="org.shaloman.pj.ai.domain.AiUsageDaily">
+  <id property="usageDate" column="usage_date"/><id property="providerCode" column="provider_code"/>
+  <result property="callCount" column="call_count"/><result property="inputTokens" column="input_tokens"/>
+  <result property="outputTokens" column="output_tokens"/><result property="estimatedCost" column="estimated_cost"/>
+  <result property="updatedAt" column="updated_at"/>
+ </resultMap>
+ <select id="findRange" resultMap="row">
+  SELECT * FROM aim_ai_usage_daily WHERE usage_date BETWEEN #{from} AND #{to} ORDER BY usage_date,provider_code
+ </select>
+ <insert id="addUsage" parameterType="org.shaloman.pj.ai.domain.AiUsageDaily">
+  INSERT INTO aim_ai_usage_daily(usage_date,provider_code,call_count,input_tokens,output_tokens,estimated_cost)
+  VALUES(#{usageDate},#{providerCode},#{callCount},#{inputTokens},#{outputTokens},#{estimatedCost})
+  ON DUPLICATE KEY UPDATE call_count=call_count+VALUES(call_count),
+   input_tokens=input_tokens+VALUES(input_tokens), output_tokens=output_tokens+VALUES(output_tokens),
+   estimated_cost=estimated_cost+VALUES(estimated_cost)
+ </insert>
+</mapper>

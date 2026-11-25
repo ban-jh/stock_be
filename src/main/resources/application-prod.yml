@@ -1,0 +1,5 @@
+# 운영 비밀값을 소스 파일에 저장하지 말고 배포 환경에서 주입합니다.
+logging:
+  level:
+    org.shaloman.pj: INFO
+    org.mybatis: WARN

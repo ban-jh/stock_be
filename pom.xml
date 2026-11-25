@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<!-- HolyLife Maven 프로젝트와 같은 Spring Boot 기반, Java 17을 사용합니다. -->
+<parent><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-parent</artifactId><version>4.0.0</version><relativePath/></parent>
+<groupId>org.shaloman.pj</groupId><artifactId>stock-be</artifactId><version>0.0.1-SNAPSHOT</version><name>stock-be</name>
+<properties><java.version>17</java.version></properties>
+<dependencies>
+<!-- REST API, JSON 처리, 입력 검증 -->
+<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-webmvc</artifactId></dependency>
+<!-- Spring Boot 4의 기본 Jackson 3 JSON 변환기와 DTO 직렬화 -->
+<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-json</artifactId></dependency>
+<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-validation</artifactId></dependency>
+<!-- HolyLife의 JDBC + MyBatis 계층을 따르고 사용자의 MariaDB 환경에 맞춥니다. -->
+<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-jdbc</artifactId></dependency>
+<dependency><groupId>org.mybatis.spring.boot</groupId><artifactId>mybatis-spring-boot-starter</artifactId><version>4.0.1</version></dependency>
+<dependency><groupId>org.mariadb.jdbc</groupId><artifactId>mariadb-java-client</artifactId><scope>runtime</scope></dependency>
+</dependencies>
+<build><plugins><plugin><groupId>org.springframework.boot</groupId><artifactId>spring-boot-maven-plugin</artifactId></plugin></plugins></build>
+</project>

@@ -1,0 +1,36 @@
+# 공통 설정. 비밀정보는 환경변수로 전달합니다.
+server:
+  port: 38081
+spring:
+  application:
+    name: stock-be
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+  datasource:
+    url: ${DB_URL:jdbc:mariadb://localhost:3306/stock?useUnicode=true&characterEncoding=utf8}
+    username: ${DB_USERNAME:stock}
+    password: ${DB_PASSWORD:}
+    driver-class-name: org.mariadb.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: org.shaloman.pj
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    default-statement-timeout: 30
+stock:
+  api:
+    # 토스 조회 컨트롤러 개인 인증값. 설정 전에는 관련 경로가 fail-closed로 503을 반환합니다.
+    access-token: ${STOCK_API_ACCESS_TOKEN:}
+  toss:
+    enabled: ${TOSS_API_ENABLED:false}
+    smoke-check: ${TOSS_SMOKE_CHECK:false}
+    min-request-interval-millis: ${TOSS_MIN_REQUEST_INTERVAL_MS:500}
+    base-url: ${TOSS_API_BASE_URL:https://openapi.tossinvest.com}
+    client-id: ${TOSS_CLIENT_ID:}
+    client-secret: ${TOSS_CLIENT_SECRET:}
+  execution:
+    mode: PAPER
+    enabled: false
+  ai:
+    monthly-call-limit: 0

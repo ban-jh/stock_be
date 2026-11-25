@@ -1,0 +1,10 @@
+# 로컬 비밀 설정은 프로젝트 루트의 Git 제외 파일에서 가져옵니다.
+spring:
+  config:
+    import: "optional:file:./.env.properties"
+
+# 로컬 로그 설정. DB 연결은 공통 application.yml 값을 사용합니다.
+logging:
+  level:
+    org.shaloman.pj: DEBUG
+    org.mybatis: INFO

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shaloman.pj.investment.strategy.mapper.StrategyMapper">
+ <resultMap id="row" type="org.shaloman.pj.investment.strategy.domain.StrategyVersion">
+  <id property="strategyId" column="strategy_id"/><result property="strategyCode" column="strategy_code"/>
+  <result property="versionNo" column="version_no"/><result property="strategyName" column="strategy_name"/>
+  <result property="enabled" column="enabled"/><result property="executionMode" column="execution_mode"/>
+  <result property="configJson" column="config_json"/><result property="createdAt" column="created_at"/><result property="updatedAt" column="updated_at"/>
+ </resultMap>
+ <select id="findAll" resultMap="row">SELECT * FROM aim_strategy ORDER BY strategy_code,version_no DESC</select>
+ <select id="findByCode" resultMap="row">SELECT * FROM aim_strategy WHERE strategy_code=#{strategyCode} ORDER BY version_no DESC</select>
+ <select id="findByCodeAndVersion" resultMap="row">SELECT * FROM aim_strategy WHERE strategy_code=#{strategyCode} AND version_no=#{versionNo}</select>
+ <insert id="insert" parameterType="org.shaloman.pj.investment.strategy.domain.StrategyVersion" useGeneratedKeys="true" keyProperty="strategyId">
+  INSERT INTO aim_strategy(strategy_code,version_no,strategy_name,enabled,execution_mode,config_json) VALUES(#{strategyCode},#{versionNo},#{strategyName},#{enabled},#{executionMode},#{configJson})
+ </insert>
+ <update id="disableEnabledVersions">UPDATE aim_strategy SET enabled=FALSE WHERE strategy_code=#{strategyCode} AND enabled=TRUE</update>
+ <update id="enableVersion">UPDATE aim_strategy SET enabled=TRUE WHERE strategy_code=#{strategyCode} AND version_no=#{versionNo} AND execution_mode='PAPER'</update>
+</mapper>

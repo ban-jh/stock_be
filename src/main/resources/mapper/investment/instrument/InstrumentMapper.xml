@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.shaloman.pj.investment.instrument.mapper.InstrumentMapper">
+ <resultMap id="row" type="org.shaloman.pj.investment.instrument.domain.Instrument">
+  <id property="instrumentId" column="instrument_id"/><result property="marketCode" column="market_code"/>
+  <result property="assetType" column="asset_type"/><result property="symbol" column="symbol"/>
+  <result property="displayName" column="display_name"/><result property="watchState" column="watch_state"/>
+  <result property="enabled" column="enabled"/><result property="memo" column="memo"/>
+  <result property="createdAt" column="created_at"/><result property="updatedAt" column="updated_at"/>
+ </resultMap>
+ <select id="findAll" resultMap="row">SELECT * FROM aim_instrument
+  <where><if test="marketCode != null">AND market_code=#{marketCode}</if><if test="watchState != null">AND watch_state=#{watchState}</if></where>
+  ORDER BY market_code,symbol
+ </select>
+ <select id="findById" resultMap="row">SELECT * FROM aim_instrument WHERE instrument_id=#{instrumentId}</select>
+ <insert id="insert" useGeneratedKeys="true" keyProperty="instrumentId">
+  INSERT INTO aim_instrument(market_code,asset_type,symbol,display_name,watch_state,enabled,memo)
+  VALUES(#{marketCode},#{assetType},#{symbol},#{displayName},#{watchState},#{enabled},#{memo})
+ </insert>
+ <update id="updateState">UPDATE aim_instrument SET watch_state=#{watchState},enabled=#{enabled} WHERE instrument_id=#{instrumentId}</update>
+</mapper>
